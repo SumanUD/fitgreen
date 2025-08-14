@@ -3376,7 +3376,7 @@ img.u-pull-left {
     --content-padding-top    : 20vh;
     --content-padding-bottom : 9.6rem;
     z-index                  : 3;
-    background-color         : #C1A27F;
+    background-color         : #C8CF7C;
     width                    : 100%;
     height                   : 100vh;
     min-height               : calc(25.5 * var(--space));
@@ -3476,7 +3476,7 @@ img.u-pull-left {
 }
 
 .s-intro__content-title {
-    --text-title-size : 8.8rem;
+    --text-title-size : 6.8rem;
     --text-multiplier : 1;
     font-weight       : 600;
     font-size         : calc(var(--text-title-size) * var(--text-multiplier));
@@ -3816,6 +3816,7 @@ img.u-pull-left {
 /* Main padding already from your .s-about */
 
 /* Styling for the new media section */
+/* ==== ABOUT SECTION LAYOUT ==== */
 .about-media {
     display: flex;
     gap: 2rem;
@@ -3823,6 +3824,7 @@ img.u-pull-left {
     margin-top: 3rem;
 }
 
+/* Image styling */
 .about-media .image-col img {
     width: 100%;
     height: auto;
@@ -3831,70 +3833,69 @@ img.u-pull-left {
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
+/* Video wrapper styling */
 .video-wrapper {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
     height: 0;
     overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+    background: #000; /* Avoid white bars while loading */
 }
 
-.video-wrapper iframe {
+.video-wrapper video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border: 0;
+    object-fit: cover; /* Crops nicely for background-like videos */
+    transition: transform 0.3s ease;
+    display: block;
+    border: none;
 }
+
+/* Optional professional hover effect */
+.video-wrapper:hover video {
+    transform: scale(1.02);
+}
+
 
 /* Responsive adjustments */
 @media screen and (max-width: 900px) {
     .about-media {
         flex-direction: column;
     }
-    .about-media .image-col, 
+    .about-media .image-col,
     .about-media .video-col {
         width: 100%;
     }
 }
+
+/* ==== ROTATING TEXT (Typing effect) ==== */
 .rotating-text {
-    position: relative;
-    height: 60px; /* match line height of your text */
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
     overflow: hidden;
+    border-right: 3px solid #333; /* typing cursor */
+    width: fit-content;
+    animation: blinkCursor 0.7s step-end infinite;
+    position: relative;
 }
 
+/* Hide original <p> text since JS will handle typing */
 .rotating-text p {
-    font-size: 25px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    width: 100%;
+    /* display: none; */
     margin: 0;
-    animation: fadeText 6s infinite; /* total cycle time */
+    font-size: 40px;
 }
 
-/* Delay each paragraph so they appear one after another */
-.rotating-text p:nth-child(1) {
-    animation-delay: 0s;
+/* Cursor blink animation */
+@keyframes blinkCursor {
+    50% { border-color: transparent; }
 }
-.rotating-text p:nth-child(2) {
-    animation-delay: 2s;
-}
-.rotating-text p:nth-child(3) {
-    animation-delay: 4s;
-}
-
-@keyframes fadeText {
-    0% { opacity: 0; }
-    5% { opacity: 1; }
-    33% { opacity: 1; }
-    38% { opacity: 0; }
-    100% { opacity: 0; }
-}
-
 
 
 /* ===================================================================
@@ -4218,6 +4219,8 @@ img.u-pull-left {
  * ------------------------------------------------------------------- */
 .s-clients {
     padding-top : var(--vspace-2);
+    background-color: #29471F;
+    max-width: none;
 }
 
 .s-clients .section-header {

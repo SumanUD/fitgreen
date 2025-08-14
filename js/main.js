@@ -543,3 +543,48 @@ document.querySelectorAll('.faq-question').forEach(button => {
     });
 });
 
+
+
+
+const container = document.querySelector('.rotating-text');
+const phrases = Array.from(container.querySelectorAll('p')).map(p => p.textContent);
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let typingSpeed = 100;    // ms per letter typing
+let deletingSpeed = 50;   // ms per letter deleting
+let pauseAfterTyped = 1500; // wait after a word is typed
+
+function typeEffect() {
+    const currentPhrase = phrases[phraseIndex];
+    const pElements = container.querySelectorAll('p');
+    
+    // Hide all p's
+    pElements.forEach(p => p.style.opacity = 0);
+    
+    // Show only the current one
+    const activeP = pElements[phraseIndex];
+    activeP.style.opacity = 1;
+
+    if (isDeleting) {
+        activeP.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        activeP.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    let delay = isDeleting ? deletingSpeed : typingSpeed;
+
+    if (!isDeleting && charIndex === currentPhrase.length) {
+        delay = pauseAfterTyped;
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+    }
+
+    setTimeout(typeEffect, delay);
+}
+
+typeEffect();
